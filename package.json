@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "create-cf-app": "./bin/create-cf-app.js"
+    "create-react-ts-app": "./bin/create-react-app.js"
   },
   "author": "LiLongJi",
   "license": "ISC",
