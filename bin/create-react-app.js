@@ -16,8 +16,8 @@ program
   .description('create a react-app with typescript')
   .action((cmd, option) => {
     const result = copyTemplate(templatePath, cwdPath);
-    if (result) console.log('create cf app has finished');
-    if (!result) console.log('create cf app failed');
+    if (result) console.info('create cf app has finished, now u can npm start and see in http://localhost:1234/demo');
+    if (!result) console.error('create cf app failed');
   });
 
 async function copyTemplate(templatePath, targetPath) {

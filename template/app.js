@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const path = require('path');
 // const config = require('./config');
@@ -10,6 +12,7 @@ const env = require('./utils/env');
 
 const app = express();
 
+// app.use((req, res, next) => res.sendFile(path.join(__dirname, 'MP_verify_pOMwKMk4RsznX9Wn.txt')));
 
 // ejs 相关
 app.engine('.ejs', require('ejs').__express);
@@ -27,13 +30,13 @@ if (!env.isProd && !env.isDev) {
 // app.use(require('./api/router'));
 
 app.use('/', async (req, res, next) => {
-  res.render('app');
+  // await config.prepare();
+  // const appid = config.wechat.appId;
+  res.render('app', {});
 });
 
-app.listen(6666);
-console.log(`listening port ${6666}.`);
-// app.listen(config.server.port);
-// logger.info(`listening port ${config.server.port}.`);
+app.listen(1234);
+console.info(`listening port ${1234}.`);
 
 // 运行脚本
 // scripts.startAll();
