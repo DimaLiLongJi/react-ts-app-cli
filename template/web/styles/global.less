@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+.ng-cloak,
+.ng-hide:not(.ng-hide-animate),
+.x-ng-cloak,
+[data-ng-cloak],
+[ng-cloak],
+[ng\:cloak],
+[x-ng-cloak] {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
+body {
+  font-family: '苹方', Verdana, Helvetica, Tahoma, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
+}
+
+a:focus {
+  outline: none !important;
+}
+
+button {
+  font: inherit;
+  outline: none;
+  border: none;
+}
+
+svg.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+.font-dpr(@font-size) {
+  font-size: @font-size;
+
+  [data-dpr="2"] & {
+    font-size: @font-size * 2;
+  }
+
+  [data-dpr="3"] & {
+    font-size: @font-size * 3;
+  }
+}

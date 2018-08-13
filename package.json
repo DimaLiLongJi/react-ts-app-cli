@@ -1,0 +1,17 @@
+{
+  "name": "cf-react-app-cli",
+  "version": "1.0.0",
+  "description": "create a react-app with typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "create-cf-app": "./bin/create-cf-app.js"
+  },
+  "author": "LiLongJi",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.17.1"
+  }
+}
