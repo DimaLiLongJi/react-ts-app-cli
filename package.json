@@ -12,6 +12,7 @@
   "author": "LiLongJi",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.4.1",
     "commander": "^2.17.1"
   }
 }

@@ -3,6 +3,7 @@
 const program = require('commander');
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 const templatePath = path.resolve(__dirname, '../template');
 const cwdPath = process.cwd();
@@ -16,8 +17,11 @@ program
   .description('create a react-app with typescript')
   .action((cmd, option) => {
     const result = copyTemplate(templatePath, cwdPath);
-    if (result) console.info('create cf app has finished, now u can npm start and see in http://localhost:1234/demo');
-    if (!result) console.error('create cf app failed');
+    if (result) {
+      console.log('    ', '----------------------------------------');
+      console.log('    ', chalk.green('★'), chalk.green('项目构建成功'));
+      console.info('    ', chalk.green('★'), chalk.green('npm start and open http://localhost:1234/demo 查看'));
+    }
   });
 
 async function copyTemplate(templatePath, targetPath) {
@@ -36,6 +40,9 @@ async function copyTemplate(templatePath, targetPath) {
     });
   } catch (error) {
     console.log(error);
+    console.log('    ', '----------------------------------------');
+    console.log('    ', chalk.red('★'), chalk.red('构建失败'));
+    console.log('    ', chalk.red('★'), chalk.red(`失败原因${error}`));
     return false;
   }
   return true;
