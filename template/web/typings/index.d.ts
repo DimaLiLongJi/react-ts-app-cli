@@ -1,4 +1,4 @@
-export as namespace CFTypings;
+export as namespace Typings;
 
 export { RouteProps } from './routes';
 export { StoreState } from './store-state';

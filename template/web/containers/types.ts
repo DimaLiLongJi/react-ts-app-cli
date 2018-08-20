@@ -1,4 +1,4 @@
-export interface Props extends CFTypings.RouteProps<any, any> {
+export interface Props extends Typings.RouteProps<any, any> {
 }
 export interface State {
 }

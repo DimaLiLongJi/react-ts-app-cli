@@ -13,12 +13,12 @@ import * as DemoAction from '../store/actions/demo';
 import Demo from 'Pages/demo';
 import { parseUrlParams, stringifyUrlParams } from 'Utils/index';
 
-const mapStateToProps = (state: CFTypings.StoreState) => ({
+const mapStateToProps = (state: Typings.StoreState) => ({
   // user: state.tutor.user,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<CFTypings.DemoAction>) => ({
-  // updateUser: (params: CFTypings.TutorInfo) => dispatch(UserActions.updateUser(params)),
+const mapDispatchToProps = (dispatch: Dispatch<Typings.DemoActions>) => ({
+  // updateUser: (params: Typings.TutorInfo) => dispatch(UserActions.updateUser(params)),
 });
 
 @(connect(mapStateToProps, mapDispatchToProps) as any)

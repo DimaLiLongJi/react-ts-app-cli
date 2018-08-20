@@ -6,6 +6,9 @@ export interface FetchMiddleWare {
     originalType?: string;
     error?: any;
 }
+
+export type DemoActions = DemoAction;
+
 export interface DemoAction extends FetchMiddleWare {
     status: number;
     type: DEMO;

@@ -13,12 +13,12 @@ import { post } from 'Service';
 
 import './style.less';
 
-const mapStateToProps = (state: CFTypings.StoreState) => ({
+const mapStateToProps = (state: Typings.StoreState) => ({
   // tutor: state.tutor.user,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<CFTypings.DemoAction>) => ({
-  // verifyUser: (params: CFTypings.VerifyParmas) => dispatch(UserActions.verifyUser(params)),
+const mapDispatchToProps = (dispatch: Dispatch<Typings.DemoActions>) => ({
+  // verifyUser: (params: Typings.VerifyParmas) => dispatch(UserActions.verifyUser(params)),
 });
 
 @(connect(mapStateToProps, mapDispatchToProps) as any)
