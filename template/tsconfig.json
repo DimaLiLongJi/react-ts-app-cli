@@ -4,14 +4,14 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "Actions/*": ["web/store/actions/*"],
-      "Components/*": ["web/components/*"],
-      "Pages/*": ["web/pages/*"],
-      "Constants/*": ["web/constants/*"],
-      "Containers/*": ["web/containers/*"],
-      "Utils/*": ["web/utils/*"],
-      "Axios": ["web/utils/axios"],
-      "Service": ["web/utils/service"],
+      "Actions/*": ["public/store/actions/*"],
+      "Components/*": ["public/components/*"],
+      "Pages/*": ["public/pages/*"],
+      "Constants/*": ["public/constants/*"],
+      "Containers/*": ["public/containers/*"],
+      "Utils/*": ["public/utils/*"],
+      "Axios": ["public/utils/axios"],
+      "Service": ["public/utils/service"],
     },
     "outDir": "build",
     "module": "commonjs",
@@ -25,14 +25,17 @@
     "sourceMap": false,
     "inlineSourceMap": true,
     "noEmitHelpers": false,
-    "lib": ["dom", "es2015.promise", "es5", "es2017"],
+    "lib": ["dom", "es2015.promise", "es5", "es2017", "es2015"],
     "allowJs": true,
+    "types": [
+      "react",
+    ]
   },
   "include": [
-    "web/**/*"
+    "public/**/*"
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
   ]
 }

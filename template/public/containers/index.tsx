@@ -4,7 +4,6 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Toast } from 'antd-mobile';
-import Cookie from 'easier-cookie';
 import { Dispatch } from 'redux';
 
 import { get } from 'Service';

@@ -1,6 +1,5 @@
 import '../styles/style.less';
 
-import 'babel-polyfill';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -13,7 +12,7 @@ import store, { persistor } from '../store/store';
 import Container from '../containers';
 
 const app: React.ReactChild = (
-  <BrowserRouter basename = "/">
+  <BrowserRouter basename = "/demo-page">
     <div className="route-wrapper">
       <Switch>
         <Route path="/" component={Container} />

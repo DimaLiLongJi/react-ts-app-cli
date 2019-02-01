@@ -58,7 +58,8 @@ jspm_packages/
 .env
 
 # webpack files
-web/scripts
+template/public/scripts
+template/public/node_modules
 
 # gulp files
 dist/

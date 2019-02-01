@@ -5,7 +5,6 @@ import cn from 'classnames';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import Cookie from 'easier-cookie';
 import { Dispatch } from 'redux';
 
 import * as DemoAction from 'Actions/demo';

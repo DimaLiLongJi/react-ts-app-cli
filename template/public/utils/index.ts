@@ -23,8 +23,8 @@ export function fff(list: any, f1: any, val: any, f2: any) {
   return found && found[f2];
 }
 
-export function debounce(fn: Function, delay?: Number): Function {
-  let timeoutId = 0;
+export function debounce(fn: Function, delay?: number): Function {
+  let timeoutId: any = 0;
   return (...args: Array<any>) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
@@ -33,8 +33,8 @@ export function debounce(fn: Function, delay?: Number): Function {
   };
 }
 
-export function interval(fn: Function, delay?: Number) {
-  let timeoutId = 0;
+export function interval(fn: Function, delay?: number) {
+  let timeoutId: any = 0;
   return (...args: Array<any>) => {
     if (timeoutId) return;
     fn(...args);

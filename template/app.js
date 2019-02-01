@@ -22,17 +22,15 @@ app.set('view engine', 'ejs');
 if (!env.isProd && !env.isDev) {
   app.set('views', './views');
   app.use(express.static('./public'));
-  app.use(express.static('./web'));
 } else {
   app.set('views', path.join(__dirname, 'rev/views'));
 }
 
 // app.use(require('./api/router'));
 
-app.use('/', async (req, res, next) => {
+app.use('/demo-page', async (req, res, next) => {
   // await config.prepare();
-  // const appid = config.wechat.appId;
-  res.render('app', {});
+  res.render('demo-page', {});
 });
 
 app.listen(1234);

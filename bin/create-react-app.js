@@ -26,8 +26,8 @@ async function copyTemplate(templatePath, targetPath) {
   } catch (error) {
     console.log(error);
     console.log('    ', '----------------------------------------');
-    console.log('    ', chalk.red('★'), chalk.red('构建失败'));
-    console.log('    ', chalk.red('★'), chalk.red(`失败原因${error}`));
+    console.log('    ', chalk.red('★'), chalk.red('build failed'));
+    console.log('    ', chalk.red('★'), chalk.red(`fail reason: ${error}`));
     return false;
   }
   return true;
@@ -48,13 +48,13 @@ program
     const result = await copyTemplate(templatePath, cwdPath);
     if (result) {
       console.log('    ', '----------------------------------------');
-      console.log('    ', chalk.green('★'), chalk.green('npm包安装中'));
-      exec('cnpm install', {
+      console.log('    ', chalk.green('★'), chalk.green('instanlling npm modules'));
+      exec('npm install', {
         encoding: 'utf-8'
       }).on('exit', (code) => {
         console.log('    ', '----------------------------------------');
-        console.log('    ', chalk.green('★'), chalk.green('项目构建成功'));
-        console.info('    ', chalk.green('★'), chalk.green('npm start and open http://localhost:1234/demo 查看'));
+        console.log('    ', chalk.green('★'), chalk.green('build successfully'));
+        console.info('    ', chalk.green('★'), chalk.green('npm start and open http://localhost:1234/demo-page/demo in browers'));
       });
     }
   });

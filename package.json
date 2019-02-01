@@ -9,8 +9,9 @@
   "bin": {
     "create-react-ts-app": "./bin/create-react-app.js"
   },
-  "author": "LiLongJi",
-  "license": "ISC",
+  "author": "DimaLiLongJi",
+  "license": "MIT",
+  "homepage": "https://github.com/DimaLiLongJi/react-ts-app-cli#readme",
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "^2.17.1"

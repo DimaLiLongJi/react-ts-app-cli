@@ -1,41 +1,37 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env) => {
   const entry = {
-    'app': './web/apps/main.tsx',
-    'vendor-flexible': './web/vendors/flexible.js',
+    'demo-page': './public/apps/demo-page.tsx',
+    'vendor-flexible': './public/vendors/flexible.js',
   };
 
   const output = {
-    path: path.resolve(__dirname, 'web/scripts'),
+    path: path.resolve(__dirname, 'public/scripts'),
     filename: '[name].js',
     publicPath: '/scripts/',
   };
-
-  if (env === 'production') {
-    // output.publicPath = 'https://static.careerfrog.com.cn/cf-tutor/scripts/';
-  }
 
   const resolve = {
     extensions: [
       '.js', '.jsx', '.ts', '.tsx',
     ],
     alias: {
-      Actions: path.resolve(__dirname, 'web/store/actions'),
-      Components: path.resolve(__dirname, 'web/components'),
-      Pages: path.resolve(__dirname, 'web/pages'),
-      Constants: path.resolve(__dirname, 'web/constants'),
-      Containers: path.resolve(__dirname, 'web/containers'),
-      Utils: path.resolve(__dirname, 'web/utils'),
-      Axios: path.resolve(__dirname, 'web/utils/axios'),
-      Service: path.resolve(__dirname, 'web/utils/service'),
+      Actions: path.resolve(__dirname, 'public/store/actions'),
+      Components: path.resolve(__dirname, 'public/components'),
+      Pages: path.resolve(__dirname, 'public/pages'),
+      Constants: path.resolve(__dirname, 'public/constants'),
+      Containers: path.resolve(__dirname, 'public/containers'),
+      Utils: path.resolve(__dirname, 'public/utils'),
+      Axios: path.resolve(__dirname, 'public/utils/axios'),
+      Service: path.resolve(__dirname, 'public/utils/service'),
     },
   };
 
   const plugins = [
-    new ExtractTextPlugin({
+    new MiniCssExtractPlugin({
       filename: '[name].css',
     }),
     new webpack.DefinePlugin({
@@ -80,10 +76,31 @@ module.exports = (env) => {
         loader: 'babel-loader',
         options: {
           presets: [
-            'env', 'react', 'stage-1', 'stage-3',
+            '@babel/preset-env', '@babel/preset-react',
           ],
           plugins: [
-            'syntax-dynamic-import',
+            '@babel/plugin-syntax-dynamic-import',
+            ['@babel/plugin-proposal-decorators', { 'legacy': true }],
+            ['@babel/plugin-proposal-class-properties', { 'loose': true }],
+            'dynamic-import-webpack',
+            [ 'import', { libraryName: 'antd-mobile', style: true }],
+          ],
+        },
+      }],
+    }, 
+    {
+      test: [
+        /\.ts$/,/\.tsx$/,
+      ],
+      exclude: [path.resolve(__dirname, 'node_modules')],
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: [
+            '@babel/preset-env', '@babel/preset-react',
+          ],
+          plugins: [
+            '@babel/plugin-syntax-dynamic-import',
             'dynamic-import-webpack',
             [
               'import',
@@ -95,78 +112,40 @@ module.exports = (env) => {
           ],
         },
       },
-      ],
-    }, 
-    {
-      test: [
-        /\.ts$/,/\.tsx$/,
-      ],
-      exclude: [path.resolve(__dirname, 'node_modules')],
-      use: [
-        {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              'env', 'react', 'stage-1', 'stage-3',
-            ],
-            plugins: [
-              'syntax-dynamic-import',
-              'dynamic-import-webpack',
-              [
-                'import',
-                {
-                  libraryName: 'antd-mobile',
-                  style: true,
-                },
-              ],
-            ],
-          },
-        },
-        {
-          loader: 'awesome-typescript-loader',
-        },
+      'awesome-typescript-loader',
       ],
     },
     {
       test: /\.css$/,
-      use: ExtractTextPlugin.extract({
-        use: [{
-          loader: 'css-loader',
-          options: {
-            minimize: true,
-          },
-        }],
-        fallback: 'style-loader',
-      }),
+      use: [{
+        loader: MiniCssExtractPlugin.loader,
+      },
+      'css-loader',
+      ],
     }, {
       test: /\.less$/,
-      use: ExtractTextPlugin.extract({
-        use: [{
-          loader: 'css-loader',
-          options: {
-            minimize: true,
-          },
-        }, {
-          loader: 'less-loader',
-          options: {
-            paths: [
-              path.resolve(__dirname, 'node_modules'),
-              path.resolve(__dirname, 'web/styles'),
-            ],
-            javascriptEnabled: true,
-          },
-        }],
-        fallback: 'style-loader',
-      }),
+      use: [{
+        loader: MiniCssExtractPlugin.loader,
+      },
+      {
+        loader: 'css-loader',
+        options: {
+          minimize: true,
+        },
+      }, {
+        loader: 'less-loader',
+        options: {
+          paths: [
+            path.resolve(__dirname, 'node_modules'),
+            path.resolve(__dirname, 'public/styles'),
+          ],
+          javascriptEnabled: true,
+        },
+      },
+      ],
     }, {
       test: /\.(eot|svg|ttf|woff|woff2|gif|png)$/,
       loader: 'url-loader',
-    }, {
-      test: require.resolve('moment'),
-      use: [{
-        loader: 'expose-loader',
-        options: 'moment',
-      }],
     }],
   };
   const config = {
