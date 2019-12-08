@@ -5,6 +5,7 @@ const path = require('path');
 const projectConfig = require('./project.config.json');
 const env = require('./utils/env');
 const { initEntry } = require('./utils/build-entry');
+const proxy = require('http-proxy-middleware');
 
 const app = express();
 
@@ -34,6 +35,17 @@ pageRoutes.forEach(route => {
     });
   });
 });
+
+// 创建代理 
+const frontProxy = projectConfig.server.proxy;
+if (frontProxy && frontProxy.length > 0) {
+  frontProxy.forEach(pr => {
+    // 代理注释
+    // /api/foo/bar -> http://www.example.org/api/foo/bar
+    // app.use('/api', proxy({target: 'http://www.example.org', changeOrigin: true}));
+    app.use(pr.baseUrl, proxy({ target: pr.target, changeOrigin: true }));
+  });
+}
 
 app.listen(projectConfig.server.port);
 console.info(`listening port ${projectConfig.server.port}.`);
