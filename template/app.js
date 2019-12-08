@@ -22,9 +22,8 @@ if (!env.isProd && !env.isDev) {
   app.set('views', path.join(__dirname, 'rev/views'));
 }
 
+// 构建页面
 const pageRoutes = Object.keys(initEntry()).map(path => `${projectConfig.front.router.baseUrl}/${path}`);
-console.log(2233, pageRoutes);
-
 pageRoutes.forEach(route => {
   app.use(route, async (req, res, next) => {
     const reg = new RegExp(`^${projectConfig.front.router.baseUrl}/([^/?]+)[^/]*`);

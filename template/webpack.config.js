@@ -111,8 +111,7 @@ module.exports = (env) => {
       test: /\.css$/,
       use: [{
         loader: MiniCssExtractPlugin.loader,
-      }, 'css-loader',
-      {
+      }, {
         loader: 'postcss-loader',
         options: {
           plugins: [
@@ -120,7 +119,7 @@ module.exports = (env) => {
             require('./utils/postcss-px-to-rem-vw')(),
           ],
         },
-      }],
+      }, 'css-loader'],
     }, {
       test: /\.less$/,
       use: [{

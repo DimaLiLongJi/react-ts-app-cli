@@ -13,7 +13,7 @@ import * as projectConfig from '../../../project.config.json';
 import App from './app';
 
 const app: React.ReactChild = (
-  <BrowserRouter basename = {`/${projectConfig.front.router.baseUrl}/$needReplacePathToken$`}>
+  <BrowserRouter basename = {`${projectConfig.front.router.baseUrl}/$needReplacePathToken$`}>
     <div className="route-wrapper">
       <Switch>
         <Route path="/" component={App} />
