@@ -1,4 +1,4 @@
-import '../styles/style.less';
+import '../../styles/style.less';
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
@@ -7,15 +7,16 @@ import { Route, Switch } from 'react-router';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import store, { persistor } from '../store/store';
+import store, { persistor } from './store/store';
+import * as projectConfig from '../../../project.config.json';
 
-import Container from '../containers';
+import App from './app';
 
 const app: React.ReactChild = (
-  <BrowserRouter basename = "/demo-page">
+  <BrowserRouter basename = {`/${projectConfig.front.router.baseUrl}/demoo1`}>
     <div className="route-wrapper">
       <Switch>
-        <Route path="/" component={Container} />
+        <Route path="/" component={App} />
       </Switch>
     </div>
   </BrowserRouter>

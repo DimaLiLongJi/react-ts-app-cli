@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 开始 -->
+  <script src="/static/common/auto-scale.js"></script>
+  <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 结束 -->
+  <link rel="stylesheet" href="http://localhost:<%- port %>/static/dist/<%- path %>.css">
+</head>
+<body>
+  <div id="root"></div>
+  <script src="http://localhost:<%- port %>/static/dist/vendor.js"></script>
+  <script src="http://localhost:<%- port %>/static/dist/runtime.js"></script>
+  <script src="http://localhost:<%- port %>/static/dist/<%- path %>.js"></script>
+</body>
+</html>

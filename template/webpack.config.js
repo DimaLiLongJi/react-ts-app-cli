@@ -1,17 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const projectConfig = require('./project.config.json');
+const { initEntry } = require('./utils/build-entry');
 
 module.exports = (env) => {
-  const entry = {
-    'demo-page': './public/apps/demo-page.tsx',
-    'vendor-flexible': './public/vendors/flexible.js',
-  };
+  const entry = initEntry();
 
   const output = {
-    path: path.resolve(__dirname, 'public/scripts'),
+    path: path.resolve(__dirname, 'static/dist'),
     filename: '[name].js',
-    publicPath: '/scripts/',
+    publicPath:
+      // 生产模式在/static/dist/ 本地开发在下面
+      env === 'production'
+        ? '/static/dist/'
+        : `http://localhost:${projectConfig.server.hmr.port}/static/dist/`,
   };
 
   const resolve = {
@@ -19,13 +22,10 @@ module.exports = (env) => {
       '.js', '.jsx', '.ts', '.tsx',
     ],
     alias: {
-      Actions: path.resolve(__dirname, 'public/store/actions'),
       Components: path.resolve(__dirname, 'public/components'),
       Pages: path.resolve(__dirname, 'public/pages'),
       Constants: path.resolve(__dirname, 'public/constants'),
-      Containers: path.resolve(__dirname, 'public/containers'),
       Utils: path.resolve(__dirname, 'public/utils'),
-      Axios: path.resolve(__dirname, 'public/utils/axios'),
       Service: path.resolve(__dirname, 'public/utils/service'),
     },
   };
@@ -48,9 +48,9 @@ module.exports = (env) => {
       minSize: 30000,
       minChunks: 1,
       maxAsyncRequests: 5,
-      maxInitialRequests : 5,
+      maxInitialRequests: 5,
       automaticNameDelimiter: '~',
-      cacheGroups:{
+      cacheGroups: {
         vendor: {
           chunks: 'initial',
           test: /node_modules/,
@@ -59,7 +59,7 @@ module.exports = (env) => {
           minChunks: 1,
           enforce: true,
           maxAsyncRequests: 5,
-          maxInitialRequests : 3,
+          maxInitialRequests: 3,
           reuseExistingChunk: true,
         },
       },
@@ -83,14 +83,14 @@ module.exports = (env) => {
             ['@babel/plugin-proposal-decorators', { 'legacy': true }],
             ['@babel/plugin-proposal-class-properties', { 'loose': true }],
             'dynamic-import-webpack',
-            [ 'import', { libraryName: 'antd-mobile', style: true }],
+            ['import', { libraryName: 'antd-mobile', style: true }],
           ],
         },
       }],
-    }, 
+    },
     {
       test: [
-        /\.ts$/,/\.tsx$/,
+        /\.ts$/, /\.tsx$/,
       ],
       exclude: [path.resolve(__dirname, 'node_modules')],
       use: [{
@@ -102,26 +102,25 @@ module.exports = (env) => {
           plugins: [
             '@babel/plugin-syntax-dynamic-import',
             'dynamic-import-webpack',
-            [
-              'import',
-              {
-                libraryName: 'antd-mobile',
-                style: true,
-              },
-            ],
+            [ 'import', { libraryName: 'antd-mobile', style: true }],
           ],
         },
-      },
-      'awesome-typescript-loader',
-      ],
+      }, 'ts-loader'],
     },
     {
       test: /\.css$/,
       use: [{
         loader: MiniCssExtractPlugin.loader,
-      },
-      'css-loader',
-      ],
+      }, 'css-loader',
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: [
+            require('autoprefixer')(),
+            require('./utils/postcss-px-to-rem-vw')(),
+          ],
+        },
+      }],
     }, {
       test: /\.less$/,
       use: [{
@@ -131,6 +130,14 @@ module.exports = (env) => {
         loader: 'css-loader',
         options: {
           minimize: true,
+        },
+      }, {
+        loader: 'postcss-loader',
+        options: {
+          plugins: [
+            require('autoprefixer')(),
+            require('./utils/postcss-px-to-rem-vw')(),
+          ],
         },
       }, {
         loader: 'less-loader',
@@ -146,15 +153,39 @@ module.exports = (env) => {
     }, {
       test: /\.(eot|svg|ttf|woff|woff2|gif|png)$/,
       loader: 'url-loader',
+    }, {
+      test: /\.(png|jpg|gif|svg|)$/,
+      loader: 'file-loader',
+      options: {
+        name: 'images/[name].[ext]?[hash]',
+      },
+      include: [
+        path.resolve(__dirname, 'public'),
+        path.resolve(__dirname, 'project.config.json'),
+      ],
     }],
   };
-  const config = {
+
+  //配置此静态文件服务器，可以用来预览打包后项目
+  const devServer = {
+    inline: true, //打包后加入一个websocket客户端
+    hot: true, //热重载
+    contentBase: path.resolve(__dirname, './'), //开发服务运行时的文件根目录
+    host: 'localhost', //主机地址
+    port: projectConfig.server.hmr.port, //端口号
+    compress: true, //开发服务器是否启动gzip等压缩
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+    },
+  };
+
+  return {
     entry,
     output,
     resolve,
     plugins,
     optimization,
     module,
+    devServer,
   };
-  return config;
 };

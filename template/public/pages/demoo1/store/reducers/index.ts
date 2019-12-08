@@ -1,9 +1,9 @@
-import demo from './demo';
+import demoo1 from './demoo1';
 
 export default {
-  demo,
+  demoo1,
 };
 
 export const persisted: any = {
-  demo,
+  demoo1,
 };

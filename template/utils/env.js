@@ -11,8 +11,6 @@ const isMocha = env === 'mocha' || env === 'dev-mocha' || env === 'master-mocha'
 const isDev = env === 'develop' || env === 'dev' || env === 'dev-mocha';
 const isProd = env === 'production' || env === 'prod' || env === 'master-mocha';
 
-console.log(`now running in ${env}`);
-
 exports = module.exports = {
   isMocha: isMocha,
   isProd: isProd,

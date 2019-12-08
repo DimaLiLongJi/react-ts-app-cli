@@ -1,6 +1,5 @@
 import * as moment from 'moment';
 import * as qs from 'qs';
-import { persistor } from '../store/store';
 
 export function fd(d: Date): string {
   return moment(d).format('YYYY-MM-DD');
@@ -64,15 +63,3 @@ export function stringifyUrlParams(params: any) {
   }
   return out.substr(0, out.length - 1);
 }
-
-
-export const logout = () => {
-  persistor.purge()
-    .then(() => {
-      window.location.href = `/api/auth/logout?redirectUrl=${encodeURIComponent(location.pathname)}`;
-    });
-};
-
-export const flush = () => {
-  persistor.flush();
-};

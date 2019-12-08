@@ -2,13 +2,9 @@
 
 const express = require('express');
 const path = require('path');
-// const config = require('./config');
-// const scripts = require('./scripts');
+const projectConfig = require('./project.config.json');
 const env = require('./utils/env');
-// const logger = require('./utils/logger')('cf-tutor');
-
-/* istanbul ignore next */
-// if (env.isProd) scripts.startAll();
+const { initEntry } = require('./utils/build-entry');
 
 const app = express();
 
@@ -21,22 +17,26 @@ app.set('view engine', 'ejs');
 // 静态文件
 if (!env.isProd && !env.isDev) {
   app.set('views', './views');
-  app.use(express.static('./public'));
+  app.use(express.static('./'));
 } else {
   app.set('views', path.join(__dirname, 'rev/views'));
 }
 
-// app.use(require('./api/router'));
+const pageRoutes = Object.keys(initEntry()).map(path => `${projectConfig.front.router.baseUrl}/${path}`);
+console.log(2233, pageRoutes);
 
-app.use('/demo-page', async (req, res, next) => {
-  // await config.prepare();
-  res.render('demo-page', {});
+pageRoutes.forEach(route => {
+  app.use(route, async (req, res, next) => {
+    const reg = new RegExp(`^${projectConfig.front.router.baseUrl}/([^/?]+)[^/]*`);
+    const urlPath = req.baseUrl.match(reg)[1];
+    res.render('index', {
+      path: urlPath,
+      port: projectConfig.server.hmr.port,
+    });
+  });
 });
 
-app.listen(1234);
-console.info(`listening port ${1234}.`);
-
-// 运行脚本
-// scripts.startAll();
+app.listen(projectConfig.server.port);
+console.info(`listening port ${projectConfig.server.port}.`);
 
 exports = module.exports = app;
