@@ -3,18 +3,19 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const projectConfig = require('./project.config.json');
 const { initEntry } = require('./utils/build-entry');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => {
   const entry = initEntry();
 
   const output = {
-    path: path.resolve(__dirname, 'static/dist'),
-    filename: '[name].js',
+    path: path.resolve(__dirname, 'static'),
+    filename: '[name]/index.js',
     publicPath:
       // 生产模式在/static/dist/ 本地开发在下面
       env === 'production'
-        ? '/static/dist/'
-        : `http://localhost:${projectConfig.server.hmr.port}/static/dist/`,
+        ? '/static/'
+        : `http://localhost:${projectConfig.server.hmr.port}/static/`,
   };
 
   const resolve = {
@@ -30,9 +31,26 @@ module.exports = (env) => {
     },
   };
 
+  // const htmlWebpackPluginList = Object.keys(initEntry()).map(en => {
+  //   return  new HtmlWebpackPlugin({
+  //     filename: `${en}.html`,
+  //     template: './index.ejs',
+  //     inject: 'body',
+  //     title: '加载中...',
+  //     chunks: [en],
+  //   });
+  // });
+
   const plugins = [
+    // ...htmlWebpackPluginList,
+    // new HtmlWebpackPlugin({
+    //   filename: 'index.html',
+    //   template: './index.ejs',
+    //   inject: 'body',
+    //   title: '加载中...',
+    // }),
     new MiniCssExtractPlugin({
-      filename: '[name].css',
+      filename: '[name]/index.css',
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -87,8 +105,7 @@ module.exports = (env) => {
           ],
         },
       }],
-    },
-    {
+    }, {
       test: [
         /\.ts$/, /\.tsx$/,
       ],
@@ -111,7 +128,7 @@ module.exports = (env) => {
       test: /\.css$/,
       use: [{
         loader: MiniCssExtractPlugin.loader,
-      }, {
+      }, 'css-loader', {
         loader: 'postcss-loader',
         options: {
           plugins: [
@@ -119,7 +136,7 @@ module.exports = (env) => {
             require('./utils/postcss-px-to-rem-vw')(),
           ],
         },
-      }, 'css-loader'],
+      }],
     }, {
       test: /\.less$/,
       use: [{
@@ -150,13 +167,21 @@ module.exports = (env) => {
       },
       ],
     }, {
-      test: /\.(eot|svg|ttf|woff|woff2|gif|png)$/,
+      test: /\.(eot|svg|ttf|woff|woff2)$/,
       loader: 'url-loader',
+      include: [
+        path.resolve(__dirname, 'public'),
+        path.resolve(__dirname, 'project.config.json'),
+      ],
     }, {
-      test: /\.(png|jpg|gif|svg|)$/,
+      test: /\.(png|jpe?g|gif|svg|)$/,
       loader: 'file-loader',
       options: {
-        name: 'images/[name].[ext]?[hash]',
+        name(file) {
+          const fileSplit = file.split('/');
+          const contextProject = fileSplit[fileSplit.length -3];
+          return `${contextProject}/images/[name].[ext]?[hash]`;
+        },
       },
       include: [
         path.resolve(__dirname, 'public'),

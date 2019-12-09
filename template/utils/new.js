@@ -128,8 +128,8 @@ program
     const storeIndexPath = path.resolve(__dirname, '../public/typings/store/index.d.ts');
     const storeIndexContent = fs.readFileSync(storeIndexPath, 'utf8');
     const newContent = storeIndexContent
-          + `\nexport * from './${answers.pathname.toLowerCase()}/state';\n`
-          + `export * from './${answers.pathname.toLowerCase()}/actions';`;
+          + `export * from './${answers.pathname.toLowerCase()}/state';\n`
+          + `export * from './${answers.pathname.toLowerCase()}/actions';\n`;
     fs.writeFileSync(storeIndexPath, newContent, { encoding: 'utf8' });
 
     if (templateResult && storeResult) {

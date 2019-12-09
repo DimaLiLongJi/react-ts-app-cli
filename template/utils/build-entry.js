@@ -33,5 +33,4 @@ function getPageName(filePath, PAGE_FLODER, ENTRY) {
 
 module.exports = {
   initEntry,
-  getPageName,
 };

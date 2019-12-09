@@ -2,9 +2,9 @@
 
 const express = require('express');
 const path = require('path');
-const projectConfig = require('./project.config.json');
-const env = require('./utils/env');
-const { initEntry } = require('./utils/build-entry');
+const projectConfig = require('../project.config.json');
+const env = require('./env');
+const { initEntry } = require('./build-entry');
 const proxy = require('http-proxy-middleware');
 
 const app = express();
@@ -16,12 +16,12 @@ app.engine('.ejs', require('ejs').__express);
 app.set('view engine', 'ejs');
 
 // 静态文件
-if (!env.isProd && !env.isDev) {
-  app.set('views', './views');
-  app.use(express.static('./'));
-} else {
-  app.set('views', path.join(__dirname, 'rev/views'));
-}
+// if (!env.isProd && !env.isDev) {
+app.set('views', './views');
+app.use(express.static('../'));
+// } else {
+//   app.set('views', path.join(__dirname, 'rev/views'));
+// }
 
 // 构建页面
 const pageRoutes = Object.keys(initEntry()).map(path => `${projectConfig.front.router.baseUrl}/${path}`);
@@ -41,7 +41,7 @@ const frontProxy = projectConfig.server.proxy;
 if (frontProxy && frontProxy.length > 0) {
   frontProxy.forEach(pr => {
     // 代理注释
-    // /api/foo/bar -> http://www.example.org/api/foo/bar
+    // /api/foo/bar -> target: http://www.example.org ->  http://www.example.org/api/foo/bar
     // app.use('/api', proxy({target: 'http://www.example.org', changeOrigin: true}));
     app.use(pr.baseUrl, proxy({ target: pr.target, changeOrigin: true }));
   });
