@@ -1,45 +1,78 @@
-import axios from 'axios';
+import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
-export const get: any = (url: string, params: any) => new Promise((resolve, reject) => {
-  const pms = params ? { params } : null;
-  axios.get(url, pms)
-    .then(res => {
-      resolve(res.data);
-    })
-    .catch(e => {
-      reject(e.response.data);
-    });
-});
+export type TypeHttpRequest = <V = any>(config?: AxiosRequestConfig) => AxiosPromise<V>;
 
-export const remove: any = (url: string, params: any) => new Promise((resolve, reject) => {
-  const pms = params ? { params } : null;
-  axios.delete(url, pms)
-    .then(res => {
-      resolve(res.data);
-    })
-    .catch(e => {
-      reject(e.response.data);
-    });
-});
+// set interceptors of axios
+axios.interceptors.request.use((config) => config, (err) => Promise.resolve(err));
 
-export const post: any = (url: string, params: any) => new Promise((resolve, reject) => {
-  axios.post(url, params)
-    .then(res => {
-      resolve(res.data);
-    })
-    .catch(e => {
-      reject(e.response.data);
-    });
-});
+axios.interceptors.response.use((res) => res.data, (err) => Promise.resolve(err));
 
-export const put: any = (url: string, params: any) => new Promise((resolve, reject) => {
-  axios.put(url, params)
-    .then(res => {
-      resolve(res.data);
-    })
-    .catch(e => {
-      reject(e.response.data);
-    });
-});
+/**
+ * function getMethod for for http request of method get
+ *
+ * @export
+ * @template V
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
+ * @returns {AxiosPromise<V>}
+ */
+export function getMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
+  return axios({
+    url,
+    ...config,
+    method: 'get',
+  });
+}
+
+/**
+ * function postMethod for for http request of method post
+ *
+ * @export
+ * @template V
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
+ * @returns {AxiosPromise<V>}
+ */
+export function postMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
+  return axios({
+    url,
+    ...config,
+    method: 'post',
+  });
+}
+
+/**
+ * function putMethod for for http request of method put
+ *
+ * @export
+ * @template V
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
+ * @returns {AxiosPromise<V>}
+ */
+export function putMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
+  return axios({
+    url,
+    ...config,
+    method: 'put',
+  });
+}
+
+/**
+ * function deleteMethod for for http request of method delete
+ *
+ * @export
+ * @template V
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
+ * @returns {AxiosPromise<V>}
+ */
+export function deleteMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
+  return axios({
+    url,
+    ...config,
+    method: 'delete',
+  });
+}
 
 export default axios;

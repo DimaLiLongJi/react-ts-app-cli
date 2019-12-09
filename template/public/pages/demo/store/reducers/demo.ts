@@ -4,7 +4,7 @@ const defaultData = {
   status: 1,
 };
 
-export default (state: Typings.StoreState["demo"] = defaultData, action: Typings.DemoActions): Typings.StoreState["demo"] => {
+export default (state: Typings.DemoState["demo"] = defaultData, action: Typings.DemoActions): Typings.DemoState["demo"] => {
   switch (action.type) {
   case DEMO:
     return {

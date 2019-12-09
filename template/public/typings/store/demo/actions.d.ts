@@ -13,4 +13,3 @@ export interface DemoAction extends FetchMiddleWare {
     status: number;
     type: DEMO;
 }
-

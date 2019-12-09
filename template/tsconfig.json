@@ -4,13 +4,13 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "Actions/*": ["public/store/actions/*"],
+      // "Actions/*": ["public/store/actions/*"],
       "Components/*": ["public/components/*"],
       "Pages/*": ["public/pages/*"],
       "Constants/*": ["public/constants/*"],
-      "Containers/*": ["public/containers/*"],
+      // "Containers/*": ["public/containers/*"],
       "Utils/*": ["public/utils/*"],
-      "Axios": ["public/utils/axios"],
+      // "Axios": ["public/utils/axios"],
       "Service": ["public/utils/service"],
     },
     "outDir": "build",
@@ -29,10 +29,12 @@
     "allowJs": true,
     "types": [
       "react",
-    ]
+    ],
+    "resolveJsonModule": true
   },
   "include": [
-    "public/**/*"
+    "public/**/*",
+    "project.config.json"
   ],
   "exclude": [
     "node_modules",

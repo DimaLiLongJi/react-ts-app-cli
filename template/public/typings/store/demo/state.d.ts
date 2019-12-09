@@ -1,4 +1,4 @@
-export interface StoreState {
+export interface DemoState {
     demo: {
         status: number,
     };

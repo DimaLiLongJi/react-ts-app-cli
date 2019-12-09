@@ -7,22 +7,21 @@ import { Link, Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Dispatch } from 'redux';
 
-import * as DemoAction from 'Actions/demo';
-import { post } from 'Service';
+import * as $needReplaceUpLowToken$Action from 'Pages/$needReplacePathToken$/store/actions/$needReplacePathToken$';
+import { postMethod } from 'Service';
 
 import './style.less';
 
-const mapStateToProps = (state: Typings.StoreState) => ({
+const mapStateToProps = (state: Typings.$needReplaceUpLowToken$State) => ({
   // tutor: state.tutor.user,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<Typings.DemoActions>) => ({
+const mapDispatchToProps = (dispatch: Dispatch<Typings.$needReplaceUpLowToken$Actions>) => ({
   // verifyUser: (params: Typings.VerifyParmas) => dispatch(UserActions.verifyUser(params)),
 });
 
 @(connect(mapStateToProps, mapDispatchToProps) as any)
-
-export default class Login extends React.Component<Props, State> {
+export default class Page1 extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {
     super(props);
   }
@@ -30,7 +29,7 @@ export default class Login extends React.Component<Props, State> {
   public render(): React.ReactChild {
     return (
       <div>
-        page: demo
+        page: $needReplacePathToken$
       </div>
     );
   }

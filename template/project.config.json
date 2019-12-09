@@ -1,0 +1,27 @@
+{
+  "server": {
+    "port": 3000,
+    "proxy": [
+      {
+        "baseUrl": "/api",
+        "target": "https://wxxcs.hl139.net",
+        "commit": "友朋接口"
+      }, {
+        "baseUrl": "/logs",
+        "target": "https://wxxcs.hl139.net",
+        "commit": "国杨日志"
+      }, {
+        "baseUrl": "/moowo",
+        "target": "http://localhost:7000"
+      }
+    ],
+    "hmr": {
+      "port": 3001
+    }
+  },
+  "front": {
+    "router": {
+      "baseUrl": "/hlj"
+    }
+  }
+}
