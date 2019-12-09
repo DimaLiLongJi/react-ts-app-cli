@@ -9,18 +9,13 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>加载中......</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/swiper.min.css">
+  <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 开始 -->
+  <script src="/static/common/auto-scale.js"></script>
+  <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 结束 -->
 </head>
 <body>
-<div id="mo-app">
-</div>
-<!-- 检查非微信流量器,进行友好提示 -->
-<!--<script src="assets/js/check_wx.js"></script>-->
-<script src="assets/js/index.js"></script>
-<script src="assets/js/platform.js"></script>
-<script type="text/javascript" src="assets/js/swiper.min.js"></script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+  <div id="root"></div>
+  <script src="/static/vendor/index.js"></script>
+  <script src="/static/runtime/index.js"></script>
 </body>
 </html>

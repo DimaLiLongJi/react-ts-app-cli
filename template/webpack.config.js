@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const projectConfig = require('./project.config.json');
 const { initEntry } = require('./utils/build-entry');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => {
   const entry = initEntry();
@@ -31,24 +31,19 @@ module.exports = (env) => {
     },
   };
 
-  // const htmlWebpackPluginList = Object.keys(initEntry()).map(en => {
-  //   return  new HtmlWebpackPlugin({
-  //     filename: `${en}.html`,
-  //     template: './index.ejs',
-  //     inject: 'body',
-  //     title: '加载中...',
-  //     chunks: [en],
-  //   });
-  // });
+  const htmlWebpackPluginList = Object.keys(initEntry()).map(en => {
+    console.log(312313, en);
+    return  new HtmlWebpackPlugin({
+      filename: `${en}/index.html`,
+      template: './utils/index.ejs',
+      inject: 'body',
+      title: '加载中...',
+      chunks: [en],
+    });
+  });
 
   const plugins = [
-    // ...htmlWebpackPluginList,
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: './index.ejs',
-    //   inject: 'body',
-    //   title: '加载中...',
-    // }),
+    ...htmlWebpackPluginList,
     new MiniCssExtractPlugin({
       filename: '[name]/index.css',
     }),
