@@ -1,3 +1,5 @@
+!static/common/**/
+
 # Logs
 logs
 *.log

@@ -119,12 +119,11 @@ module.exports = (env) => {
           plugins: [
             '@babel/plugin-syntax-dynamic-import',
             'dynamic-import-webpack',
-            [ 'import', { libraryName: 'antd-mobile', style: true }],
+            ['import', { libraryName: 'antd-mobile', style: true }],
           ],
         },
       }, 'ts-loader'],
-    },
-    {
+    }, {
       test: /\.css$/,
       use: [{
         loader: MiniCssExtractPlugin.loader,
@@ -179,8 +178,10 @@ module.exports = (env) => {
       options: {
         name(file) {
           const fileSplit = file.split('/');
-          const contextProject = fileSplit[fileSplit.length -3];
-          return `${contextProject}/images/[name].[ext]?[hash]`;
+          const contextProjectPath = fileSplit[fileSplit.length - 3];
+          const beforeProjectPath = fileSplit[fileSplit.length - 4];
+          if (beforeProjectPath === 'pages') return `${contextProjectPath}/images/[name].[ext]?[hash]`;
+          else return 'images/[name].[ext]?[hash]';
         },
       },
       include: [
