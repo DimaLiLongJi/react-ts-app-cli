@@ -93,27 +93,28 @@ program
   .parse(process.argv);
 
 program
-  // .command('create')
-  .description('创建前端项目')
+  .description('创建react工程')
   .action(async (cmd, option) => {
     // 获取交互 使用哪种语言 并获取项目名
     const answers = await inquirer.prompt([{
       type: 'input',
-      message: '设置创建的文件夹名',
+      message: '设置创建的项目名',
       name: 'pathname',
       validate: (val) => {
         const has = checkFinderName(val);
-        if (!has) return true;
-        else return `文件夹名字：${val} 已存在，请重新输入`;
+        if (has) return `项目文件夹：${val} 已存在，请重新输入`; 
+        if (!/^\w+$/.test(val)) return '项目名只能使用英文数字及_字符';
+        return true;
       },
     }]);
+    const projectName = answers.pathname.toLowerCase();
     // 设置模板路径
     let templatePath = path.resolve(__dirname, './template/page');
     // 设置创建目录路径
-    let targetPath = path.resolve(__dirname, `../public/pages/${answers.pathname.toLowerCase()}`);
+    let targetPath = path.resolve(__dirname, `../public/pages/${projectName}`);
     // store相关
     let storeTemplatePath = path.resolve(__dirname, './template/store');
-    let storeTargetPath = path.resolve(__dirname, `../public/typings/store/${answers.pathname.toLowerCase()}`);
+    let storeTargetPath = path.resolve(__dirname, `../public/typings/store/${projectName}`);
 
     // 创建文件目录
     fs.mkdirSync(targetPath);
@@ -121,15 +122,15 @@ program
 
     // 复制模板
     const templateResult = await copyTemplate(templatePath, targetPath);
-    if (templateResult) await replaceTemplate(targetPath, answers.pathname.toLowerCase());
+    if (templateResult) await replaceTemplate(targetPath, projectName);
     const storeResult = await copyTemplate(storeTemplatePath, storeTargetPath);
-    if (storeResult) await replaceTemplate(storeTargetPath, answers.pathname.toLowerCase());
+    if (storeResult) await replaceTemplate(storeTargetPath, projectName);
 
     const storeIndexPath = path.resolve(__dirname, '../public/typings/store/index.d.ts');
     const storeIndexContent = fs.readFileSync(storeIndexPath, 'utf8');
     const newContent = storeIndexContent
-          + `export * from './${answers.pathname.toLowerCase()}/state';\n`
-          + `export * from './${answers.pathname.toLowerCase()}/actions';\n`;
+          + `export * from './${projectName}/state';\n`
+          + `export * from './${projectName}/actions';\n`;
     fs.writeFileSync(storeIndexPath, newContent, { encoding: 'utf8' });
 
     if (templateResult && storeResult) {
