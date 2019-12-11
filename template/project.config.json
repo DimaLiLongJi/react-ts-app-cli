@@ -1,4 +1,16 @@
 {
+  "base": {
+    "dev": {
+      "baseUrl": "/hlj",
+      "serverUrl": "http://localhost:7000/moowo",
+      "hallHome": "http://wx.10086.cn/hlj/global/bizhall/"
+    },
+    "prod": {
+      "baseUrl": "/heilongjiang",
+      "serverUrl": "http://wx.10086.cn/heilongjiang/global/moowo/api",
+      "hallHome": "http://wx.10086.cn/heilongjiang/global/bizhall/"
+    }
+  },
   "server": {
     "port": 3000,
     "proxy": [
@@ -17,11 +29,6 @@
     ],
     "hmr": {
       "port": 3001
-    }
-  },
-  "front": {
-    "router": {
-      "baseUrl": "/hlj"
     }
   }
 }

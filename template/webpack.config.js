@@ -32,7 +32,6 @@ module.exports = (env) => {
   };
 
   const htmlWebpackPluginList = Object.keys(initEntry()).map(en => {
-    console.log(312313, en);
     return  new HtmlWebpackPlugin({
       filename: `${en}/index.html`,
       template: './utils/index.ejs',
@@ -42,6 +41,7 @@ module.exports = (env) => {
     });
   });
 
+  console.log(2313, env);
   const plugins = [
     ...htmlWebpackPluginList,
     new MiniCssExtractPlugin({
@@ -49,7 +49,8 @@ module.exports = (env) => {
     }),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
+        'NODE_ENV': JSON.stringify(env),
+        'config': env === 'production' ? JSON.stringify(projectConfig.base.prod) : JSON.stringify(projectConfig.base.dev),
       },
     }),
   ];

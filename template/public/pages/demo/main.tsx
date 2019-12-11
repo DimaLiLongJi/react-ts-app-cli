@@ -12,8 +12,10 @@ import * as projectConfig from '../../../project.config.json';
 
 import App from './app';
 
+console.log(222222, process.env);
+
 const app: React.ReactChild = (
-  <BrowserRouter basename = {`${(process.env.config as any).baseUrl}/$needReplacePathToken$`}>
+  <BrowserRouter basename = {`${(process.env.config as any).baseUrl}/demo`}>
     <div className="route-wrapper">
       <Switch>
         <Route path="/" component={App} />

@@ -24,10 +24,10 @@ app.use(express.static('../'));
 // }
 
 // 构建页面
-const pageRoutes = Object.keys(initEntry()).map(path => `${projectConfig.front.router.baseUrl}/${path}`);
+const pageRoutes = Object.keys(initEntry()).map(path => `${projectConfig.base.dev.baseUrl}/${path}`);
 pageRoutes.forEach(route => {
   app.use(route, async (req, res, next) => {
-    const reg = new RegExp(`^${projectConfig.front.router.baseUrl}/([^/?]+)[^/]*`);
+    const reg = new RegExp(`^${projectConfig.base.dev.baseUrl}/([^/?]+)[^/]*`);
     const urlPath = req.baseUrl.match(reg)[1];
     res.render('index', {
       path: urlPath,

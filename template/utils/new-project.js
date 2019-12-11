@@ -136,7 +136,7 @@ program
     if (templateResult && storeResult) {
       console.log('    ', '----------------------------------------');
       console.log('    ', chalk.green('★'), chalk.green('构建成功'));
-      console.info('    ', chalk.green('★'), chalk.green(`请运行 npm start 并在浏览器打开 http://localhost:${projectConfig.server.port}${projectConfig.front.router.baseUrl}/${answers.pathname}`));
+      console.info('    ', chalk.green('★'), chalk.green(`请运行 npm start 并在浏览器打开 http://localhost:${projectConfig.server.port}${projectConfig.base.dev.baseUrl}/${answers.pathname}`));
     } else {
       console.log('    ', '----------------------------------------');
       console.log('    ', chalk.red('★'), chalk.res(`构建${templateResult ? '页面成功' : '页面失败'}`));
