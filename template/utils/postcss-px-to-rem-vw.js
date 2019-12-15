@@ -7,7 +7,7 @@ const objectAssign = require('object-assign');
 // Not anything inside url()
 // Any digit followed by px
 // !singlequotes|!doublequotes|!url()|pixelunit
-const pxRegex = /"[^"]+"|'[^']+'|url\([^\)]+\)|(\d*\.?\d+)px/ig;
+const pxRegex = /"[^"]+"|'[^']+'|url\([^)]+\)|(\d*\.?\d+)px/ig;
 
 const defaults = {
   viewportWidth: 750, // iphone6 的尺寸750px*1334px
@@ -18,7 +18,7 @@ const defaults = {
   minPixelValue: 1,
   mediaQuery: false, // 是否转换 media 中的条件
   addRem: true, // 是否需要转换成 rem
-  remUnit: 46.875 // rem 根元素大小
+  remUnit: 46.875, // rem 根元素大小
 };
 
 module.exports = postcss.plugin('postcss-px-to-viewport', function (options) {
@@ -80,7 +80,7 @@ function createPxReplaceRem(viewportSize, minPixelValue, unitPrecision, remUnit)
 function toFixed(number, precision) {
   const multiplier = Math.pow(10, precision + 1),
     wholeNumber = Math.floor(number * multiplier);
-  return Math.round(wholeNumber / 10) * 10 / multiplier;
+  return (Math.round(wholeNumber / 10) * 10 / multiplier).toFixed(2);
 }
 
 function blacklistedSelector(blacklist, selector) {
