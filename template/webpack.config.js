@@ -173,7 +173,8 @@ module.exports = (env) => {
       loader: 'file-loader',
       options: {
         name(file) {
-          const fileSplit = file.split('/');
+          const filePath = path.normalize(file);
+          const fileSplit = filePath.split(path.sep);
           const contextProjectPath = fileSplit[fileSplit.length - 3];
           const beforeProjectPath = fileSplit[fileSplit.length - 4];
           if (beforeProjectPath === 'pages') return `${contextProjectPath}/images/[name].[ext]?[hash]`;
