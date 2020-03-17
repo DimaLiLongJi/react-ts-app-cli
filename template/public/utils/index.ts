@@ -43,15 +43,14 @@ export function interval(fn: Function, delay?: number) {
   };
 }
 
-export function parseUrlParams(props: any) {
-  if (!window) return {};
-  const qsParams = (window.location.search.length && qs.parse(window.location.search.substring(1))) || {};
-  const out = Object.assign({}, qsParams, props.match ? props.match.params : {});
-  Object.keys(out).forEach(k => {
-    const val = out[k];
-    if (/^\d+$/.test(val)) out[k] = Number(val);
-  });
-  return out;
+export function parseUrlParams<T = any>(): T {
+  // if (!window) return {};
+  const qsParams: T = (window.location.search.length && qs.parse(window.location.search.substring(1))) || {};
+  // Object.keys(qsParams).forEach(k => {
+  //   const val = qsParams[k];
+  //   if (/^\d+$/.test(val)) qsParams[k] = Number(val);
+  // });
+  return qsParams;
 }
 
 export function stringifyUrlParams(params: any) {

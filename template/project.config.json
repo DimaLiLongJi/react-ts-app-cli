@@ -1,30 +1,31 @@
 {
   "base": {
     "dev": {
-      "baseUrl": "/hlj",
-      "serverUrl": "http://localhost:7000/moowo",
-      "hallHome": "http://wx.10086.cn/hlj/global/bizhall/"
+      "baseUrl": "/hlj/global",
+      "serverUrl": "http://wx.10086.cn/hlj/global/moowo-test/server",
+      "hallHome": "http://wx.10086.cn/hlj/global/bizhall/",
+      "publicPath": "http://localhost:3001/"
+    },
+    "test": {
+      "baseUrl": "/hlj/global",
+      "serverUrl": "http://wx.10086.cn/hlj/global/moowo-test/server",
+      "hallHome": "http://wx.10086.cn/hlj/global/bizhall/",
+      "publicPath": "/hlj/global/"
     },
     "prod": {
-      "baseUrl": "/heilongjiang",
+      "baseUrl": "/heilongjiang/global",
       "serverUrl": "http://wx.10086.cn/heilongjiang/global/moowo/api",
-      "hallHome": "http://wx.10086.cn/heilongjiang/global/bizhall/"
+      "hallHome": "http://wx.10086.cn/heilongjiang/global/bizhall/",
+      "publicPath": "/heilongjiang/global/"
     }
   },
   "server": {
     "port": 3000,
     "proxy": [
       {
-        "baseUrl": "/api",
-        "target": "https://wxxcs.hl139.net",
-        "commit": "友朋接口"
-      }, {
-        "baseUrl": "/logs",
-        "target": "https://wxxcs.hl139.net",
-        "commit": "国杨日志"
-      }, {
         "baseUrl": "/moowo",
-        "target": "http://localhost:7000"
+        "target": "http://localhost:7000",
+        "commit": "本地测试环境的接口代理地址"
       }
     ],
     "hmr": {

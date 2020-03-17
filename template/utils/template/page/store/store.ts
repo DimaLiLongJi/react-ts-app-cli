@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import reducers, { persisted } from './reducers';
-import fetchMiddleware from 'Utils/fetchMiddleware';
+import fetchMiddleware from 'Utils/fetch-middleware';
 import * as root from 'window-or-global';
 
 Object.keys(persisted).forEach(k => {

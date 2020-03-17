@@ -9,16 +9,16 @@ import * as VConsole from 'vconsole';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import store, { persistor } from './store/store';
-import * as projectConfig from '../../../project.config.json';
+import { Config } from 'Constants/config';
 
 import App from './app';
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'prod') {
   const vconsole = new (VConsole as any)();
 }
 
 const app: React.ReactChild = (
-  <BrowserRouter basename = {`${(process.env.config as any).baseUrl}/$needReplacePathToken$`}>
+  <BrowserRouter basename = {`${Config.pageRoot}/$needReplacePathToken$`}>
     <div className="route-wrapper">
       <Switch>
         <Route path="/" component={App} />

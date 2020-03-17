@@ -6,7 +6,6 @@ const path = require('path');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const glob = require('glob');
-const projectConfig = require('../project.config.json');
 
 function getPageName(filePath, PAGE_FLODER, ENTRY) {
   return filePath.substring(PAGE_FLODER.length + 1, filePath.indexOf(ENTRY) - 1);

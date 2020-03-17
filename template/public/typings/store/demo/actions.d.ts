@@ -1,6 +1,6 @@
 export type DEMO = 'DEMO'
 
-export interface FetchMiddleWare {
+interface FetchMiddleWare {
     stage?: string;
     result?: any;
     originalType?: string;

@@ -1,9 +1,7 @@
 'use strict';
 
 const express = require('express');
-const path = require('path');
 const projectConfig = require('../project.config.json');
-const env = require('./env');
 const { initEntry } = require('./build-entry');
 const proxy = require('http-proxy-middleware');
 
@@ -31,7 +29,8 @@ pageRoutes.forEach(route => {
     const urlPath = req.baseUrl.match(reg)[1];
     res.render('index', {
       path: urlPath,
-      port: projectConfig.server.hmr.port,
+      port: projectConfig.server.port,
+      hmrPort: projectConfig.server.hmr.port,
     });
   });
 });

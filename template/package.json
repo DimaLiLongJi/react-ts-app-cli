@@ -15,12 +15,22 @@
     ]
   },
   "scripts": {
+    "clean": "node ./utils/rm.js",
     "new:component": "node ./utils/new-component.js",
     "new:project": "node ./utils/new-project.js",
-    "start:dev": "concurrently \"npm run start:server\" \"npm run start:dev-webpack\"",
-    "start:dev-webpack": "webpack-dev-server --watch --env=development --mode=development --progress --devtool '#source-map'",
     "start:server": "nodemon ./utils/app.js",
-    "build:webpack": "webpack --env=production --mode=production --progress"
+    "start:dev": "npm run start:server & npm run start:dev-webpack",
+    "start:test": "npm run start:server & npm run start:test-webpack",
+    "start:prod": "npm run start:server & npm run start:prod-webpack",
+    "start:dev-windows": "concurrently \"npm run start:server\" \"npm run start:dev-webpack\"",
+    "start:test-windows": "concurrently \"npm run start:server\" \"npm run start:test-webpack\"",
+    "start:prod-windows": "concurrently \"npm run start:server\" \"npm run start:prod-webpack\"",
+    "start:dev-webpack": "webpack-dev-server --watch --env=dev --mode=development --progress --devtool '#source-map'",
+    "start:test-webpack": "webpack-dev-server --watch --env=test --mode=development --progress --devtool '#source-map'",
+    "start:prod-webpack": "webpack --env=prod --mode=production --progress --devtool '#source-map'",
+    "build:dev": "npm run clean && webpack --env=dev --mode=development --progress",
+    "build:test": "npm run clean && webpack --env=test --mode=development --progress",
+    "build:prod": "npm run clean && webpack --env=prod --mode=production --progress"
   },
   "nyc": {
     "require": [

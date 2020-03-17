@@ -10,6 +10,11 @@ import * as $needReplaceUpLowToken$Action from "./store/actions/$needReplacePath
 import Page1 from "./container/page1";
 import { parseUrlParams, stringifyUrlParams } from "Utils/index";
 
+import { WithWechatAuth } from 'Components/with-wechat-auth';
+import { WithWebAuth } from 'Components/with-web-auth';
+import { WithAlipayAuth } from 'Components/with-alipay-auth';
+import { WithAppAuth } from 'Components/with-app-auth';
+
 export interface Props extends Typings.RouteProps<any, any> {}
 export interface State {}
 
@@ -21,6 +26,15 @@ const mapDispatchToProps = (dispatch: Dispatch<Typings.$needReplaceUpLowToken$Ac
   // updateUser: (params: Typings.TutorInfo) => dispatch(UserActions.updateUser(params)),
 });
 
+let activeId = '';
+if (process.env.NODE_ENV === 'dev') activeId = '';
+if (process.env.NODE_ENV === 'test') activeId = '';
+if (process.env.NODE_ENV === 'prod') activeId = '';
+
+@WithWechatAuth(activeId)
+@WithWebAuth(activeId)
+@WithAlipayAuth(activeId)
+@WithAppAuth(activeId)
 @(connect(mapStateToProps, mapDispatchToProps) as any)
 export default class App extends React.Component<Props, State> {
   constructor(props: Readonly<Props>) {

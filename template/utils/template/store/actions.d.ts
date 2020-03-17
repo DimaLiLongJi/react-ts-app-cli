@@ -1,6 +1,6 @@
 export type $needReplaceUpToken$ = '$needReplaceUpToken$'
 
-export interface FetchMiddleWare {
+interface FetchMiddleWare {
     stage?: string;
     result?: any;
     originalType?: string;

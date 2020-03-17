@@ -1,11 +1,12 @@
-import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
+import { Config } from "Constants/config";
 
-export type TypeHttpRequest = <V = any>(config?: AxiosRequestConfig) => AxiosPromise<V>;
+export type TypeHttpRequest = <V = any>(config?: AxiosRequestConfig) => Promise<Typings.HLJResponse<V>>;
 
 // set interceptors of axios
 axios.interceptors.request.use((config) => config, (err) => Promise.resolve(err));
 
-axios.interceptors.response.use((res) => res.data, (err) => Promise.resolve(err));
+// axios.interceptors.response.use((res) => res.data, (err) => Promise.resolve(err));
 
 /**
  * function getMethod for for http request of method get
@@ -14,14 +15,17 @@ axios.interceptors.response.use((res) => res.data, (err) => Promise.resolve(err)
  * @template V
  * @param {string} [url]
  * @param {AxiosRequestConfig} [config={}]
- * @returns {AxiosPromise<V>}
+ * @returns {Promise<Typings.HLJResponse<V>>}
  */
-export function getMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
-  return axios({
+export async function getMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): Promise<Typings.HLJResponse<V>> {
+  return (await axios({
     url,
+    headers: {
+      'HEADER-MOOAO-AC': sessionStorage.getItem(Config.activityIdKey), 
+    },
     ...config,
     method: 'get',
-  });
+  })).data;
 }
 
 /**
@@ -31,14 +35,17 @@ export function getMethod<V = any>(url?: string, config: AxiosRequestConfig = {}
  * @template V
  * @param {string} [url]
  * @param {AxiosRequestConfig} [config={}]
- * @returns {AxiosPromise<V>}
+ * @returns {Promise<Typings.HLJResponse<V>>}
  */
-export function postMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
-  return axios({
+export async function postMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): Promise<Typings.HLJResponse<V>> {
+  return (await axios({
     url,
+    headers: {
+      'HEADER-MOOAO-AC': sessionStorage.getItem(Config.activityIdKey), 
+    },
     ...config,
     method: 'post',
-  });
+  })).data;
 }
 
 /**
@@ -48,14 +55,17 @@ export function postMethod<V = any>(url?: string, config: AxiosRequestConfig = {
  * @template V
  * @param {string} [url]
  * @param {AxiosRequestConfig} [config={}]
- * @returns {AxiosPromise<V>}
+ * @returns {Promise<Typings.HLJResponse<V>>}
  */
-export function putMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
-  return axios({
+export async function putMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): Promise<Typings.HLJResponse<V>> {
+  return (await axios({
     url,
+    headers: {
+      'HEADER-MOOAO-AC': sessionStorage.getItem(Config.activityIdKey), 
+    },
     ...config,
     method: 'put',
-  });
+  })).data;
 }
 
 /**
@@ -65,14 +75,17 @@ export function putMethod<V = any>(url?: string, config: AxiosRequestConfig = {}
  * @template V
  * @param {string} [url]
  * @param {AxiosRequestConfig} [config={}]
- * @returns {AxiosPromise<V>}
+ * @returns {Promise<Typings.HLJResponse<V>>}
  */
-export function deleteMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
-  return axios({
+export async function deleteMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): Promise<Typings.HLJResponse<V>> {
+  return (await axios({
     url,
+    headers: {
+      'HEADER-MOOAO-AC': sessionStorage.getItem(Config.activityIdKey), 
+    },
     ...config,
     method: 'delete',
-  });
+  })).data;
 }
 
 export default axios;

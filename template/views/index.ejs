@@ -9,15 +9,45 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
+  <style>
+    html, body {
+      -webkit-text-size-adjust: 100% !important;
+      text-size-adjust: 100% !important;
+      -moz-text-size-adjust: 100% !important;
+    }
+  </style>
+  <script>
+    (function() {
+             if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+                 handleFontSize();
+             } else {
+                 if (document.addEventListener) {
+                     document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
+                 } else if (document.attachEvent) {
+                     document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+                     document.attachEvent("onWeixinJSBridgeReady", handleFontSize);  }
+             }
+             function handleFontSize() {
+                 // 设置网页字体为默认大小
+                 WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize' : 0 });
+                 // 重写设置网页字体大小的事件
+                 WeixinJSBridge.on('menu:setfont', function() {
+                     WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize' : 0 });
+                 });
+             }
+         })();
+  </script>
   <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 开始 -->
   <script src="http://localhost:<%- port %>/static/common/auto-scale.js"></script>
   <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 结束 -->
-  <link rel="stylesheet" href="http://localhost:<%- port %>/static/<%- path %>/index.css">
+  <link rel="stylesheet" href="http://localhost:<%- port %>/static/common/init.css">
+  <link rel="stylesheet" href="http://localhost:<%- hmrPort %>/<%- path %>/index.css">
 </head>
 <body>
   <div id="root"></div>
-  <script src="http://localhost:<%- port %>/static/vendor/index.js"></script>
-  <script src="http://localhost:<%- port %>/static/runtime/index.js"></script>
-  <script src="http://localhost:<%- port %>/static/<%- path %>/index.js"></script>
+  <script src="http://localhost:<%- port %>/static/common/init.js"></script>
+  <script src="http://localhost:<%- port %>/static/common/jweixin-1.2.0.js"></script>
+  <script src="http://localhost:<%- port %>/static/common/platform.js"></script>
+  <script src="http://localhost:<%- hmrPort %>/<%- path %>/index.js"></script>
 </body>
 </html>

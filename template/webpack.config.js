@@ -11,11 +11,8 @@ module.exports = (env) => {
   const output = {
     path: path.resolve(__dirname, 'static'),
     filename: '[name]/index.js',
-    publicPath:
-      // 生产模式在/static/dist/ 本地开发在下面
-      env === 'production'
-        ? '/static/'
-        : `http://localhost:${projectConfig.server.hmr.port}/static/`,
+    chunkFilename: 'chunks/[name].[chunkhash].js',
+    publicPath: projectConfig.base[env].publicPath,
   };
 
   const resolve = {
@@ -38,10 +35,10 @@ module.exports = (env) => {
       inject: 'body',
       title: '加载中...',
       chunks: [en],
+      environment: projectConfig.base[env].publicPath,
     });
   });
 
-  console.log(2313, env);
   const plugins = [
     ...htmlWebpackPluginList,
     new MiniCssExtractPlugin({
@@ -50,35 +47,35 @@ module.exports = (env) => {
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify(env),
-        'config': env === 'production' ? JSON.stringify(projectConfig.base.prod) : JSON.stringify(projectConfig.base.dev),
+        'config': JSON.stringify(projectConfig.base[env]),
       },
     }),
   ];
 
-  const optimization = {
-    runtimeChunk: 'single',
-    splitChunks: {
-      chunks: 'async',
-      minSize: 30000,
-      minChunks: 1,
-      maxAsyncRequests: 5,
-      maxInitialRequests: 5,
-      automaticNameDelimiter: '~',
-      cacheGroups: {
-        vendor: {
-          chunks: 'initial',
-          test: /node_modules/,
-          name: 'vendor',
-          minSize: 0,
-          minChunks: 1,
-          enforce: true,
-          maxAsyncRequests: 5,
-          maxInitialRequests: 3,
-          reuseExistingChunk: true,
-        },
-      },
-    },
-  };
+  // const optimization = {
+  //   runtimeChunk: 'single',
+  //   splitChunks: {
+  //     chunks: 'async',
+  //     minSize: 30000,
+  //     minChunks: 1,
+  //     maxAsyncRequests: 5,
+  //     maxInitialRequests: 5,
+  //     automaticNameDelimiter: '~',
+  //     cacheGroups: {
+  //       vendor: {
+  //         chunks: 'initial',
+  //         test: /node_modules/,
+  //         name: 'vendor',
+  //         minSize: 0,
+  //         minChunks: 1,
+  //         enforce: true,
+  //         maxAsyncRequests: 5,
+  //         maxInitialRequests: 3,
+  //         reuseExistingChunk: true,
+  //       },
+  //     },
+  //   },
+  // };
 
   const module = {
     rules: [{
@@ -206,7 +203,7 @@ module.exports = (env) => {
     output,
     resolve,
     plugins,
-    optimization,
+    // optimization,
     module,
     devServer,
   };

@@ -15,3 +15,4 @@ export default class $ComponentName$ extends React.Component<Props, State> {
     );
   }
 }
+
